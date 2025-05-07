@@ -6,7 +6,6 @@
 using namespace std;
 
 // delete space and \n or something else
-// by ChatGPT lmao
 string trim(const string& str) {
     size_t first = str.find_first_not_of(" \r\n\t");
     if (first == string::npos) return "";
@@ -63,13 +62,6 @@ void edit(string name){
 }
 
 int main(){
-    /*
-    題目編號定義為：(章節數)-(題號)
-    例如第一章第二題即為 1-2
-    若要新增題目請在編號那邊打 "creat"
-    要修改的話沒有做, 直接進檔案改比較快
-    */
-    
     string filename, line;
     bool data = false;
     bool finans = true;
