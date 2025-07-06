@@ -46,7 +46,7 @@ void edit(string name){
                 }
             }
 
-            cout << "第" << i << "筆測資答案(換行q結束):" << endl;
+            cout << "第" << i << "筆測資output(換行q結束):" << endl;
             while (getline(cin, inputans)){
                 if (inputans != "q"){
                     nowansfile << inputans << endl;
@@ -78,7 +78,12 @@ int main(){
             cout << "有該題資料:" << filename << endl;
             data = true;
         }else{
-            cout << "無該題資料" << endl;
+            cout << "無該題資料，是否要創建該題資料(輸入 y 或 n)？:";
+            char ans;
+            cin >> ans;
+            if (ans == 'y'){
+                edit(filename);
+            }
         }
     
         if (data){
@@ -96,7 +101,7 @@ int main(){
     
             int com = system("g++ user_code.cpp -o user_code");    // compile
             if (com != 0){
-                cout << "編譯失敗!";
+                cout << "CE!!";
                 return 1;
             }
             // cout << "test";
@@ -111,13 +116,16 @@ int main(){
     
                 // check the answer and the user output
                 string output, ans;
+                string wrong_output = "";
                 ifstream outputfile("output.txt");
                 ifstream ansoutput(ans_path);
     
                 finans = true;
                 while (getline(outputfile, output) && getline(ansoutput, ans)){
                     // cout << "【DEBUG】" << trim(output) << " vs " << trim(ans) << endl;
+                    
                     if (trim(output) != trim(ans)){
+                        wrong_output += output;
                         finans = false;
                         break;
                     }
@@ -125,12 +133,16 @@ int main(){
                 // check the number of line
                 if ((getline(outputfile, output) || getline(ansoutput, ans))) {
                     finans = false;
+                    wrong_output += output;
                 }
     
                 if (finans == true){
                     cout << "第" << i << "筆測資:AC" << endl;
                 }else{
                     cout << "第" << i << "筆測資:WA" << endl;
+                    cout << "您的答案:" << wrong_output << endl;
+                    cout << "正確答案:" << ans << endl;
+                    cout << "\n";
                 }
     
                 // deal with next round
